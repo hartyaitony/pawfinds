@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawFinds — ציוד לחיות מחמד במחירים הוגנים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F1C35; --navy-mid:#1B2B4B; --navy-light:#2E4270;
+  --rose:#C96A52; --rose-hover:#A8503A;
+  --gold:#E8B84B; --teal:#2A8080;
+  --text:#0F1C35; --text-muted:#7A8499;
+  --white:#FFFFFF; --border:#EBEEF4;
+  --radius:18px;
+  --shadow-md:0 8px 32px rgba(15,28,53,.12);
+  --shadow-hover:0 20px 60px rgba(15,28,53,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;color:var(--text);background:#FAFBFD;overflow-x:hidden;direction:rtl}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:var(--navy-light);border-radius:3px}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:0 56px;background:var(--navy);position:sticky;top:0;z-index:200;height:64px;box-shadow:0 2px 20px rgba(0,0,0,.25)}
+.logo{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--white);display:flex;align-items:center;gap:6px;text-decoration:none;direction:ltr}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.55);font-size:.82rem;font-weight:600;padding:7px 16px;border-radius:50px;cursor:pointer;transition:.2s}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.09)}
+.nav-links a.active{color:var(--gold);background:rgba(232,184,75,.13);font-weight:700}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block;animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:48vh;background:var(--navy);overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(232,184,75,.08) 0%,transparent 65%),radial-gradient(ellipse at 80% 20%,rgba(201,106,82,.07) 0%,transparent 55%);pointer-events:none}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:56px 72px 56px 56px;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,184,75,.15);border:1px solid rgba(232,184,75,.25);color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:50px;margin-bottom:20px;width:fit-content}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.9rem;color:var(--white);margin-bottom:18px;line-height:1.15;font-weight:700}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.6);margin-bottom:32px;max-width:420px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--rose);color:white;padding:13px 28px;border-radius:50px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;transition:.25s;width:fit-content;font-family:'Heebo',sans-serif}
+.hero-cta:hover{background:var(--rose-hover);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,106,82,.35)}
+.hero-image{position:relative;overflow:hidden}
+.hero-image img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(1.1)}
+.hero-image::after{content:'';position:absolute;inset:0;background:linear-gradient(to left,transparent 40%,var(--navy) 100%)}
+
+/* STATS */
+.stats-bar{display:flex}
+.stat-item{flex:1;padding:20px 24px;text-align:center;border-left:1px solid rgba(255,255,255,.07);background:var(--navy)}
+.stat-item:last-child{border-left:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);font-weight:700;line-height:1}
+.stat-label{font-size:.72rem;color:rgba(255,255,255,.5);font-weight:600;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+
+/* SECTION */
+.section-header{padding:48px 56px 0;display:flex;align-items:baseline;justify-content:space-between}
+.section-header h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);font-weight:700}
+.section-count{font-size:.8rem;color:var(--text-muted);font-weight:600}
+.section-divider{height:1px;background:var(--border);margin:16px 56px 0}
+
+/* FILTER */
+.filter-bar{display:flex;gap:10px;padding:20px 56px 0;flex-wrap:wrap;align-items:center;min-height:0}
+.filter-label{font-size:.72rem;font-weight:800;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:white;color:var(--text-muted);font-family:'Heebo',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--navy-light);color:var(--navy);background:#F4F6FA}
+.filter-btn.active{background:var(--navy);border-color:var(--navy);color:var(--gold);font-weight:700;box-shadow:0 3px 12px rgba(15,28,53,.18)}
+
+/* GRID */
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px 56px 72px}
+
+/* CARD */
+.product-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:.3s cubic-bezier(.25,.8,.25,1)}
+.product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);border-color:transparent}
+.product-image-wrap{position:relative;aspect-ratio:4/3;background:#f4f5f7;overflow:hidden}
+.product-image-wrap img{width:100%;height:100%;object-fit:cover;transition:.4s ease}
+.product-card:hover .product-image-wrap img{transform:scale(1.04)}
+.badge-container{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:5px;align-items:flex-end;z-index:5}
+.badge{padding:4px 11px;border-radius:50px;font-size:.65rem;font-weight:800;color:white;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 2px 10px rgba(0,0,0,.15);white-space:nowrap}
+.badge-rec{background:var(--navy-mid);color:var(--gold)}
+.badge-new{background:var(--teal)}
+.badge-best{background:var(--rose)}
+.product-body{padding:20px;flex-grow:1;display:flex;flex-direction:column}
+.product-category{font-size:.72rem;color:var(--teal);font-weight:700;letter-spacing:.3px;margin-bottom:6px}
+.product-title{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.45;height:2.9em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.rank-info{margin-bottom:12px}
+.rank-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.rank-text{font-size:.72rem;font-weight:700;color:var(--navy)}
+.rank-pct{font-size:.68rem;color:var(--text-muted)}
+.rank-bar-bg{height:5px;background:#EEF0F4;border-radius:3px;overflow:hidden}
+.rank-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#F5A623);border-radius:3px}
+.product-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+.price-current{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--navy);font-weight:700}
+.btn-aliexpress{background:var(--rose);color:white;text-decoration:none;padding:8px 18px;border-radius:50px;font-weight:700;font-size:.8rem;transition:.2s}
+.btn-aliexpress:hover{background:var(--rose-hover);transform:translateX(-2px)}
+
+/* EMPTY & SKELETON */
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 40px;color:var(--text-muted)}
+.empty-state .empty-icon{font-size:3.5rem;margin-bottom:16px;display:block;opacity:.4}
+.empty-state p{font-size:1rem;font-weight:500}
+.skeleton-card{background:white;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.skeleton-img{aspect-ratio:4/3;background:linear-gradient(90deg,#f0f2f5 25%,#e8eaee 50%,#f0f2f5 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skeleton-body{padding:20px}
+.skeleton-line{height:10px;background:linear-gradient(90deg,#f0f2f5 25%,#e8eaee 50%,#f0f2f5 75%);background-size:200% 100%;border-radius:5px;margin-bottom:10px;animation:shimmer 1.5s infinite}
+.skeleton-line.short{width:40%}.skeleton-line.med{width:70%}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ABOUT */
+.about-hero{background:var(--navy);padding:80px 56px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
+.about-hero::before{content:'🐾';position:absolute;font-size:18rem;opacity:.03;top:-20px;left:-40px;pointer-events:none}
+.about-content{position:relative;z-index:2}
+.about-eyebrow{font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.about-content h2{font-family:'Playfair Display',serif;font-size:2.6rem;color:var(--white);margin-bottom:20px;line-height:1.2}
+.about-content p{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.65);margin-bottom:16px}
+.about-img img{width:100%;border-radius:var(--radius);box-shadow:0 24px 64px rgba(0,0,0,.35);object-fit:cover;height:380px}
+.about-values{padding:72px 56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.value-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:.25s}
+.value-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.value-icon{font-size:2.2rem;margin-bottom:16px}
+.value-title{font-weight:800;color:var(--navy);font-size:1rem;margin-bottom:8px}
+.value-desc{font-size:.88rem;line-height:1.65;color:var(--text-muted)}
+
+/* FOOTER */
+footer{background:var(--navy);padding:28px 56px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.06)}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);direction:ltr}
+.footer-logo span{color:var(--gold)}
+.footer-note{font-size:.75rem;color:rgba(255,255,255,.35);font-weight:500}
+
+
+/* LOAD BAR */
+#loadBar{
+  background:var(--navy);
+  padding:12px 56px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  border-bottom:2px solid rgba(232,184,75,.2);
+}
+#loadBar p{color:rgba(255,255,255,.7);font-size:.85rem;font-weight:500}
+.load-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:var(--navy);
+  padding:8px 20px;border-radius:50px;
+  font-weight:800;font-size:.82rem;
+  cursor:pointer;border:none;
+  font-family:'Heebo',sans-serif;
+  transition:.2s;white-space:nowrap;
+}
+.load-btn:hover{background:#d4a63a;transform:translateY(-1px)}
+.load-btn input{display:none}
+#loadSuccess{
+  background:#0d3320;
+  padding:10px 56px;
+  display:none;
+  align-items:center;
+  gap:10px;
+  border-bottom:2px solid #1a6640;
+}
+#loadSuccess span{color:#4ade80;font-size:.85rem;font-weight:600}
+#loadedFileName{color:#86efac;font-size:.82rem}
+@media(max-width:768px){
+  #loadBar,#loadSuccess{padding:12px 20px;flex-wrap:wrap;gap:10px}
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .hero{grid-template-columns:1fr}.hero-image{display:none}
+  .hero-content{padding:40px 28px}.hero h1{font-size:1.9rem}
+  .stats-bar{display:grid;grid-template-columns:1fr 1fr}
+  .product-grid{grid-template-columns:1fr 1fr;padding:20px 20px 48px;gap:16px}
+  .section-header{padding:32px 20px 0}
+  .section-divider{margin:14px 20px 0}
+  .filter-bar{padding:16px 20px 0;gap:8px}
+  .about-hero{grid-template-columns:1fr;padding:48px 28px;gap:40px}.about-img{display:none}
+  .about-values{grid-template-columns:1fr;padding:40px 20px}
+  footer{flex-direction:column;gap:10px;text-align:center;padding:24px 20px}
+}
+@media(max-width:500px){.product-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo" onclick="showPage('home');return false">&#x1F43E; Paw<span>Finds</span></a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">ראשי</a></li>
+    <li><a onclick="showPage('recommended')" id="nav-recommended">&#x2B50; מומלצים</a></li>
+    <li><a onclick="showPage('new')" id="nav-new">&#x1F195; חדש</a></li>
+    <li><a onclick="showPage('bestsellers')" id="nav-bestsellers">&#x1F525; נמכרים</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">אודות</a></li>
+  </ul>
+</nav>
+
+
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">&#x1F43E; PawFinds &#x2014; נבחר בקפידה</div>
+      <h1>ציוד פרימיום לחברים ה<em>פרוותיים</em> שלנו</h1>
+      <p class="hero-sub">אנחנו ב-PawFinds בוחנים כל מוצר לפני שמגיע אליכם. רק מה שבאמת שווה — במחירים שלא ישברו אתכם.</p>
+      <button class="hero-cta" onclick="document.getElementById('homeGrid').scrollIntoView({behavior:'smooth'})">גלה את המוצרים &#x2190;</button>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=900" alt="">
+    </div>
+  </section>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num" id="statTotal">&#x2014;</div><div class="stat-label">מוצרים</div></div>
+    <div class="stat-item"><div class="stat-num" id="statRec">&#x2014;</div><div class="stat-label">מומלצים</div></div>
+    <div class="stat-item"><div class="stat-num" id="statNew">&#x2014;</div><div class="stat-label">חדשים</div></div>
+    <div class="stat-item"><div class="stat-num" id="statBest">&#x2014;</div><div class="stat-label">נמכרים ביותר</div></div>
+  </div>
+  <div class="section-header">
+    <h2>הבחירות שלנו</h2>
+    <span class="section-count" id="homeCount"></span>
+  </div>
+  <div class="filter-bar" id="homeFilter"></div>
+  <div class="section-divider"></div>
+  <div class="product-grid" id="homeGrid"></div>
+</div>
+
+<div id="page-recommended" class="page">
+  <div class="section-header">
+    <h2>&#x2B50; מומלץ על ידינו</h2>
+    <span class="section-count" id="recCount"></span>
+  </div>
+  <div class="filter-bar" id="recFilter"></div>
+  <div class="section-divider"></div>
+  <div class="product-grid" id="recGrid"></div>
+</div>
+
+<div id="page-new" class="page">
+  <div class="section-header">
+    <h2>&#x1F195; פריטים חדשים</h2>
+    <span class="section-count" id="newCount"></span>
+  </div>
+  <div class="filter-bar" id="newFilter"></div>
+  <div class="section-divider"></div>
+  <div class="product-grid" id="newGrid"></div>
+</div>
+
+<div id="page-bestsellers" class="page">
+  <div class="section-header">
+    <h2>&#x1F525; הלהיטים של השבוע</h2>
+    <span class="section-count" id="bestCount"></span>
+  </div>
+  <div class="filter-bar" id="bestFilter"></div>
+  <div class="section-divider"></div>
+  <div class="product-grid" id="bestGrid"></div>
+</div>
+
+<div id="page-about" class="page">
+  <section class="about-hero">
+    <div class="about-content">
+      <div class="about-eyebrow">הסיפור שלנו</div>
+      <h2>נולד מאהבה לחיות</h2>
+      <p>נעים מאוד! אנחנו חובבי חיות בדיוק כמוכם. האתר הזה נולד מתוך רצון אמיתי לעזור לבעלי חיות למצוא ציוד איכותי במחירים הוגנים, מבלי ליפול למלכודות של מוצרים גרועים.</p>
+      <p>כל מוצר שמופיע כאן נבחר לאחר בדיקת ביקורות קפדנית, דירוג המוכר ואיכות החומרים. אנחנו מאמינים שלחיות שלנו מגיע הטוב ביותר.</p>
+    </div>
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1581888227599-779811939961?w=800" alt="">
+    </div>
+  </section>
+  <div class="about-values">
+    <div class="value-card">
+      <div class="value-icon">&#x1F50D;</div>
+      <div class="value-title">בדיקה קפדנית</div>
+      <div class="value-desc">כל מוצר עובר סינון על פי ביקורות אמיתיות, דירוג מוכר ותמונות לקוח.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">&#x1F4B0;</div>
+      <div class="value-title">מחיר שפוי</div>
+      <div class="value-desc">אנחנו מוצאים את הגרסאות הטובות מ-AliExpress שנותנות אותה איכות בפחות כסף.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">&#x1F43E;</div>
+      <div class="value-title">מבעלי חיות לבעלי חיות</div>
+      <div class="value-desc">כל המלצה שלנו מגיעה מניסיון אישי — לא מפרסום בתשלום.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">&#x1F43E; Paw<span>Finds</span></div>
+  <div class="footer-note">כל הקישורים הם קישורי שותף. תודה שתומכים בנו!</div>
+</footer>
+
+<script>
+var EXCEL_FILE = 'pawfinds_data.xlsx';
+var PRODUCTS = [];
+
+var FALLBACK_RAW = [
+  {id:1, category_id:'כלבים',   title:'רתמת טיולים ארגונומית עם ידית גב',  image_url:'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600', price:'52',  is_recommended:'yes', is_new:'yes', is_bestseller:'yes', reviews:1500, affiliate_link:'#'},
+  {id:2, category_id:'חתולים',  title:'מזרקת מים שקטה לחתולים 2.5L',       image_url:'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600', price:'89',  is_recommended:'yes', is_new:'no',  is_bestseller:'yes', reviews:900,  affiliate_link:'#'},
+  {id:3, category_id:'כלבים',   title:'מיטת הרגעה מעגלית לכלבים',           image_url:'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600', price:'110', is_recommended:'no',  is_new:'yes', is_bestseller:'no',  reviews:400,  affiliate_link:'#'},
+  {id:4, category_id:'חתולים',  title:'עץ טיפוס לחתולים 5 קומות',           image_url:'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=600', price:'195', is_recommended:'yes', is_new:'yes', is_bestseller:'yes', reviews:2100, affiliate_link:'#'},
+  {id:5, category_id:'כלבים',   title:'קערת האכלה חכמה אנטי-בולע',          image_url:'https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=600', price:'45',  is_recommended:'no',  is_new:'yes', is_bestseller:'no',  reviews:320,  affiliate_link:'#'},
+  {id:6, category_id:'כלבים',   title:'חגורת בטיחות לרכב לכלבים',           image_url:'https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?w=600', price:'38',  is_recommended:'no',  is_new:'no',  is_bestseller:'yes', reviews:750,  affiliate_link:'#'},
+  {id:7, category_id:'ציפורים', title:'כלוב פסיון מרווח עם מוטות עץ',      image_url:'https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600', price:'220', is_recommended:'yes', is_new:'no',  is_bestseller:'no',  reviews:180,  affiliate_link:'#'},
+  {id:8, category_id:'חתולים',  title:'משחק נוצות אינטראקטיבי חשמלי',      image_url:'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=600', price:'65',  is_recommended:'yes', is_new:'yes', is_bestseller:'yes', reviews:1350, affiliate_link:'#'},
+  {id:9, category_id:'דגים',    title:'מסנן אקווריום שקט 500L/H',           image_url:'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600', price:'78',  is_recommended:'no',  is_new:'no',  is_bestseller:'yes', reviews:620,  affiliate_link:'#'},
+  {id:10,category_id:'ארנבים',  title:'כלוב ארנבים מרווח עם תא שינה',      image_url:'https://images.unsplash.com/photo-1535241749838-299277b6305f?w=600', price:'160', is_recommended:'yes', is_new:'yes', is_bestseller:'no',  reviews:290,  affiliate_link:'#'}
+];
+
+var CAT_MAP = {
+  'כלבים':   {he:'כלבים',   emoji:'🐕'},
+  'חתולים':  {he:'חתולים',  emoji:'🐈'},
+  'ציפורים': {he:'ציפורים', emoji:'🦜'},
+  'דגים':    {he:'דגים',    emoji:'🐟'},
+  'ארנבים':  {he:'ארנבים',  emoji:'🐇'},
+  'אוגרים':  {he:'אוגרים',  emoji:'🐹'},
+  'זוחלים':  {he:'זוחלים',  emoji:'🦎'},
+  'כללי':    {he:'כללי',    emoji:'🐾'}
+};
+
+var activeFilters = {home:'ALL', rec:'ALL', newp:'ALL', best:'ALL'};
+
+function normalizeProduct(r) {
+  var flag = function(v) {
+    if (typeof v === 'boolean') return v;
+    return String(v || '').trim().toLowerCase() === 'yes';
+  };
+  return {
+    id: r.id,
+    category: String(r.category_id || 'כללי').trim(),
+    title: String(r.title || 'מוצר ללא שם'),
+    image: String(r.image_url || ''),
+    price: r.price || '?',
+    link: r.affiliate_link || '#',
+    is_rec:  flag(r.is_recommended),
+    is_new:  flag(r.is_new),
+    is_best: flag(r.is_bestseller),
+    reviews: parseInt(r.reviews || 0)
+  };
+}
+
+function catDisplay(code) {
+  return CAT_MAP[code] ? CAT_MAP[code].emoji + ' ' + CAT_MAP[code].he : code;
+}
+
+function cardHTML(p, extra) {
+  extra = extra || '';
+  var badges = '';
+  if (p.is_rec)  badges += '<span class="badge badge-rec">מומלץ</span>';
+  if (p.is_new)  badges += '<span class="badge badge-new">חדש</span>';
+  if (p.is_best) badges += '<span class="badge badge-best">נמכר ביותר</span>';
+  return '<div class="product-card">' +
+    '<div class="product-image-wrap">' +
+      '<img src="' + p.image + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/400x300?text=PawFinds\'">' +
+      '<div class="badge-container">' + badges + '</div>' +
+    '</div>' +
+    '<div class="product-body">' + extra +
+      '<p class="product-category">' + catDisplay(p.category) + '</p>' +
+      '<h3 class="product-title">' + p.title + '</h3>' +
+      '<div class="product-footer">' +
+        '<span class="price-current">&#8362;' + p.price + '</span>' +
+        '<a href="' + p.link + '" target="_blank" rel="noopener" class="btn-aliexpress">לבדיקה &#8592;</a>' +
+      '</div>' +
+    '</div></div>';
+}
+
+function skeletons(n) {
+  var s = '';
+  for (var i = 0; i < n; i++) {
+    s += '<div class="skeleton-card"><div class="skeleton-img"></div>' +
+         '<div class="skeleton-body"><div class="skeleton-line short"></div>' +
+         '<div class="skeleton-line med"></div><div class="skeleton-line"></div></div></div>';
+  }
+  return s;
+}
+
+function empty(msg) {
+  return '<div class="empty-state"><span class="empty-icon">🐾</span><p>' + msg + '</p></div>';
+}
+
+function getUniqueCats(pool) {
+  var cats = [];
+  pool.forEach(function(p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
+  return cats;
+}
+
+function buildFilter(filterId, key, pool) {
+  var el = document.getElementById(filterId);
+  if (!el) return;
+  var cats = getUniqueCats(pool);
+  if (cats.length <= 1) { el.innerHTML = ''; return; }
+  var active = activeFilters[key];
+  var html = '<span class="filter-label">סנן:</span>';
+  html += '<button class="filter-btn' + (active === 'ALL' ? ' active' : '') +
+    '" onclick="setFilter(\'' + key + '\',\'ALL\')">🐾 הכל (' + pool.length + ')</button>';
+  cats.forEach(function(cat) {
+    var count = pool.filter(function(p) { return p.category === cat; }).length;
+    var info = CAT_MAP[cat] || {he: cat, emoji: '🐾'};
+    html += '<button class="filter-btn' + (active === cat ? ' active' : '') +
+      '" onclick="setFilter(\'' + key + '\',\'' + cat + '\')">' +
+      info.emoji + ' ' + info.he + ' (' + count + ')</button>';
+  });
+  el.innerHTML = html;
+}
+
+function setFilter(key, cat) {
+  activeFilters[key] = cat;
+  if (key === 'home') renderHome();
+  else if (key === 'rec')  renderRec();
+  else if (key === 'newp') renderNew();
+  else if (key === 'best') renderBest();
+}
+
+function applyFilter(pool, key) {
+  var cat = activeFilters[key];
+  return cat === 'ALL' ? pool : pool.filter(function(p) { return p.category === cat; });
+}
+
+function renderHome() {
+  var pool = PRODUCTS;
+  buildFilter('homeFilter', 'home', pool);
+  var list = applyFilter(pool, 'home');
+  document.getElementById('homeCount').textContent = list.length + ' מוצרים';
+  document.getElementById('homeGrid').innerHTML = list.length ? list.map(function(p){return cardHTML(p)}).join('') : empty('אין מוצרים בקטגוריה זו');
+}
+
+function renderRec() {
+  var pool = PRODUCTS.filter(function(p){return p.is_rec});
+  buildFilter('recFilter', 'rec', pool);
+  var list = applyFilter(pool, 'rec');
+  document.getElementById('recCount').textContent = list.length + ' מוצרים';
+  document.getElementById('recGrid').innerHTML = list.length ? list.map(function(p){return cardHTML(p)}).join('') : empty('אין מוצרים בקטגוריה זו');
+}
+
+function renderNew() {
+  var pool = PRODUCTS.filter(function(p){return p.is_new});
+  buildFilter('newFilter', 'newp', pool);
+  var list = applyFilter(pool, 'newp');
+  document.getElementById('newCount').textContent = list.length + ' מוצרים';
+  document.getElementById('newGrid').innerHTML = list.length ? list.map(function(p){return cardHTML(p)}).join('') : empty('אין מוצרים בקטגוריה זו');
+}
+
+function renderBest() {
+  var pool = PRODUCTS.filter(function(p){return p.is_best}).sort(function(a,b){return b.reviews-a.reviews});
+  buildFilter('bestFilter', 'best', pool);
+  var list = applyFilter(pool, 'best');
+  var maxR = pool.length > 0 ? pool[0].reviews : 1;
+  document.getElementById('bestCount').textContent = list.length + ' מוצרים';
+  document.getElementById('bestGrid').innerHTML = list.length
+    ? list.map(function(p) {
+        var rank = pool.findIndex(function(x){return x.id===p.id}) + 1;
+        var pct  = Math.min(100, Math.round((p.reviews/maxR)*100));
+        var extra = '<div class="rank-info"><div class="rank-label">' +
+          '<span class="rank-text"># ' + rank + ' בפופולריות</span>' +
+          '<span class="rank-pct">' + p.reviews.toLocaleString() + ' ביקורות</span>' +
+          '</div><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:' + pct + '%"></div></div></div>';
+        return cardHTML(p, extra);
+      }).join('')
+    : empty('אין מוצרים בקטגוריה זו');
+}
+
+function updateStats() {
+  function anim(id, target) {
+    var el = document.getElementById(id), t0 = null;
+    requestAnimationFrame(function run(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts-t0)/700, 1);
+      el.textContent = Math.floor(p * target);
+      if (p < 1) requestAnimationFrame(run); else el.textContent = target;
+    });
+  }
+  anim('statTotal', PRODUCTS.length);
+  anim('statRec',   PRODUCTS.filter(function(p){return p.is_rec}).length);
+  anim('statNew',   PRODUCTS.filter(function(p){return p.is_new}).length);
+  anim('statBest',  PRODUCTS.filter(function(p){return p.is_best}).length);
+}
+
+function renderAll() {
+  updateStats();
+  renderHome(); renderRec(); renderNew(); renderBest();
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Parse CSV text into array of objects
+function parseCSV(text) {
+  var lines = text.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^\uFEFF/,''); });
+  return lines.slice(1).map(function(line) {
+    // Handle commas inside quoted fields
+    var cols = [];
+    var cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur);
+    var obj = {};
+    headers.forEach(function(h, i){ obj[h] = (cols[i] || '').trim(); });
+    return obj;
+  }).filter(function(r){ return r.id; });
+}
+
+document.getElementById('homeGrid').innerHTML = skeletons(6);
+
+fetch('pawfinds_data.csv?v=' + Date.now())
+  .then(function(res){ if(!res.ok) throw new Error(); return res.text(); })
+  .then(function(text){
+    var data = parseCSV(text);
+    PRODUCTS = data.map(normalizeProduct);
+    renderAll();
+  })
+  .catch(function(){
+    console.warn('CSV not found, using fallback data');
+    PRODUCTS = FALLBACK_RAW.map(normalizeProduct);
+    renderAll();
+  });
+</script>
+</body>
+</html>
