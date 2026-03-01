@@ -1,4 +1,4 @@
-﻿id,category_id,title,image_url,price,is_recommended,is_new,is_bestseller,reviews,affiliate_link
+id,category_id,title,image_url,price,is_recommended,is_new,is_bestseller,reviews,affiliate_link
 101,כלבים,רתמת טיולים ארגונומית עם ידית גב,https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600,52,yes,yes,yes,1500,https://www.aliexpress.com/item/example1.html
 102,חתולים,מזרקת מים שקטה לחתולים 2.5L,https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600,89,yes,no,yes,900,https://www.aliexpress.com/item/example2.html
 103,כלבים,מיטת הרגעה מעגלית לכלבים,https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600,110,no,yes,no,400,https://www.aliexpress.com/item/example3.html
@@ -9,3 +9,5 @@
 108,חתולים,משחק נוצות אינטראקטיבי חשמלי,https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=600,65,yes,yes,yes,1350,https://www.aliexpress.com/item/example8.html
 109,דגים,מסנן אקווריום שקט 500L/H,https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600,78,no,no,yes,620,https://www.aliexpress.com/item/example9.html
 110,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,no,550,https://www.aliexpress.com/item/example10.html
+111,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620,
+112,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620,
