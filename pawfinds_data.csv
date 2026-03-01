@@ -1,13 +1,14 @@
-id,category_id,title,image_url,price,is_recommended,is_new,is_bestseller,reviews,affiliate_link
-101,כלבים,רתמת טיולים ארגונומית עם ידית גב,https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600,52,yes,yes,yes,1500,https://www.aliexpress.com/item/example1.html
-102,חתולים,מזרקת מים שקטה לחתולים 2.5L,https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600,89,yes,no,yes,900,https://www.aliexpress.com/item/example2.html
-103,כלבים,מיטת הרגעה מעגלית לכלבים,https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600,110,no,yes,no,400,https://www.aliexpress.com/item/example3.html
-104,חתולים,עץ טיפוס לחתולים 5 קומות,https://images.unsplash.com/photo-1561948955-570b270e7c36?w=600,195,yes,yes,yes,2100,https://www.aliexpress.com/item/example4.html
-105,כלבים,קערת האכלה חכמה אנטי-בולע,https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=600,45,no,yes,no,320,https://www.aliexpress.com/item/example5.html
-106,ציפורים,כלוב פסיון מרווח עם מוטות עץ,https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600,220,yes,no,no,180,https://www.aliexpress.com/item/example6.html
-107,כלבים,חגורת בטיחות לרכב לכלבים,https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?w=600,38,no,no,yes,750,https://www.aliexpress.com/item/example7.html
-108,חתולים,משחק נוצות אינטראקטיבי חשמלי,https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=600,65,yes,yes,yes,1350,https://www.aliexpress.com/item/example8.html
-109,דגים,מסנן אקווריום שקט 500L/H,https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600,78,no,no,yes,620,https://www.aliexpress.com/item/example9.html
-110,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,no,550,https://www.aliexpress.com/item/example10.html
-111,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620,
-112,כלבים,צעצוע גומי בצורת עצם עם חריצים,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620,
+﻿id,category_id,title,image_url,price,is_recommended,is_new,is_bestseller,reviews,affiliate_link
+101,╫¢╫£╫æ╫Ö╫¥,╫¿╫¬╫₧╫¬ ╫ÿ╫Ö╫ò╫£╫Ö╫¥ ╫É╫¿╫Æ╫ò╫á╫ò╫₧╫Ö╫¬ ╫ó╫¥ ╫Ö╫ô╫Ö╫¬ ╫Æ╫æ,https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600,52,yes,yes,yes,1500,https://www.aliexpress.com/item/example1.html
+102,╫ù╫¬╫ò╫£╫Ö╫¥,╫₧╫û╫¿╫º╫¬ ╫₧╫Ö╫¥ ╫⌐╫º╫ÿ╫ö ╫£╫ù╫¬╫ò╫£╫Ö╫¥ 2.5L,https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600,89,yes,no,yes,900,https://www.aliexpress.com/item/example2.html
+103,╫¢╫£╫æ╫Ö╫¥,╫₧╫Ö╫ÿ╫¬ ╫ö╫¿╫Æ╫ó╫ö ╫₧╫ó╫Æ╫£╫Ö╫¬ ╫£╫¢╫£╫æ╫Ö╫¥,https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600,110,no,yes,no,400,https://www.aliexpress.com/item/example3.html
+104,╫ù╫¬╫ò╫£╫Ö╫¥,╫ó╫Ñ ╫ÿ╫Ö╫ñ╫ò╫í ╫£╫ù╫¬╫ò╫£╫Ö╫¥ 5 ╫º╫ò╫₧╫ò╫¬,https://images.unsplash.com/photo-1561948955-570b270e7c36?w=600,195,yes,yes,yes,2100,https://www.aliexpress.com/item/example4.html
+105,╫¢╫£╫æ╫Ö╫¥,╫º╫ó╫¿╫¬ ╫ö╫É╫¢╫£╫ö ╫ù╫¢╫₧╫ö ╫É╫á╫ÿ╫Ö-╫æ╫ò╫£╫ó,https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=600,45,no,yes,no,320,https://www.aliexpress.com/item/example5.html
+106,╫ª╫Ö╫ñ╫ò╫¿╫Ö╫¥,╫¢╫£╫ò╫æ ╫ñ╫í╫Ö╫ò╫ƒ ╫₧╫¿╫ò╫ò╫ù ╫ó╫¥ ╫₧╫ò╫ÿ╫ò╫¬ ╫ó╫Ñ,https://images.unsplash.com/photo-1612024782955-49fae79e42bb?w=600,220,yes,no,no,180,https://www.aliexpress.com/item/example6.html
+107,╫¢╫£╫æ╫Ö╫¥,╫ù╫Æ╫ò╫¿╫¬ ╫æ╫ÿ╫Ö╫ù╫ò╫¬ ╫£╫¿╫¢╫æ ╫£╫¢╫£╫æ╫Ö╫¥,https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?w=600,38,no,no,yes,750,https://www.aliexpress.com/item/example7.html
+108,╫ù╫¬╫ò╫£╫Ö╫¥,╫₧╫⌐╫ù╫º ╫á╫ò╫ª╫ò╫¬ ╫É╫Ö╫á╫ÿ╫¿╫É╫º╫ÿ╫Ö╫æ╫Ö ╫ù╫⌐╫₧╫£╫Ö,https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=600,65,yes,yes,yes,1350,https://www.aliexpress.com/item/example8.html
+109,╫ô╫Æ╫Ö╫¥,╫₧╫í╫á╫ƒ ╫É╫º╫ò╫ò╫¿╫Ö╫ò╫¥ ╫⌐╫º╫ÿ 500L/H,https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600,78,no,no,yes,620,https://www.aliexpress.com/item/example9.html
+110,╫¢╫£╫æ╫Ö╫¥,╫ª╫ó╫ª╫ò╫ó ╫Æ╫ò╫₧╫Ö ╫æ╫ª╫ò╫¿╫¬ ╫ó╫ª╫¥ ╫ó╫¥ ╫ù╫¿╫Ö╫ª╫Ö╫¥,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,no,550,https://www.aliexpress.com/item/example10.html
+111,╫¢╫£╫æ╫Ö╫¥,╫ª╫ó╫ª╫ò╫ó ╫Æ╫ò╫₧╫Ö ╫æ╫ª╫ò╫¿╫¬ ╫ó╫ª╫¥ ╫ó╫¥ ╫ù╫¿╫Ö╫ª╫Ö╫¥,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620
+112,╫¢╫£╫æ╫Ö╫¥,╫ª╫ó╫ª╫ò╫ó ╫Æ╫ò╫₧╫Ö ╫æ╫ª╫ò╫¿╫¬ ╫ó╫ª╫¥ ╫ó╫¥ ╫ù╫¿╫Ö╫ª╫Ö╫¥,https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600,29,yes,no,yes,620
+
