@@ -321,6 +321,17 @@ var CAT_MAP = {
 
 var activeFilters = {home:'ALL', rec:'ALL', newp:'ALL', best:'ALL'};
 
+function fixImageUrl(url) {
+  if (!url) return '';
+  // Add https: if starts with //
+  if (url.indexOf('//') === 0) url = 'https:' + url;
+  // Remove AliExpress thumbnail suffixes like _140x140.jpg, _350x350.jpg etc.
+  url = url.replace(/_\d+x\d+(\.\w+)$/, '$1');
+  // Remove size params like .jpg_140x140xz.jpg
+  url = url.replace(/\.jpg_\d+x\d+.*\.jpg$/i, '.jpg');
+  return url;
+}
+
 function normalizeProduct(r) {
   var flag = function(v) {
     if (typeof v === 'boolean') return v;
@@ -330,7 +341,7 @@ function normalizeProduct(r) {
     id: r.id,
     category: String(r.category_id || 'כללי').trim(),
     title: String(r.title || 'מוצר ללא שם'),
-    image: String(r.image_url || ''),
+    image: fixImageUrl(String(r.image_url || '')),
     price: r.price || '?',
     link: r.affiliate_link || '#',
     is_rec:  flag(r.is_recommended),
@@ -360,7 +371,7 @@ function cardHTML(p, extra) {
       '<h3 class="product-title">' + p.title + '</h3>' +
       '<div class="product-footer">' +
         '<span class="price-current">&#8362;' + p.price + '</span>' +
-        '<a href="' + p.link + '" target="_blank" rel="noopener" class="btn-aliexpress">לבדיקה &#8592;</a>' +
+        '<a href="' + p.link + '" target="_blank" rel="noopener" class="btn-aliexpress">לקנייה &#8592;</a>' +
       '</div>' +
     '</div></div>';
 }
@@ -491,36 +502,58 @@ function showPage(id) {
 
 // Parse CSV text into array of objects
 function parseCSV(text) {
-  var lines = text.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^\uFEFF/,''); });
-  return lines.slice(1).map(function(line) {
-    // Handle commas inside quoted fields
-    var cols = [];
-    var cur = '', inQ = false;
-    for (var i = 0; i < line.length; i++) {
+  // Normalize line endings and remove BOM
+  text = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  
+  // Robust field parser - handles quoted fields, commas in text, Hebrew etc.
+  function parseLine(line) {
+    var cols = [], cur = '', inQ = false, i = 0;
+    while (i < line.length) {
       var ch = line[i];
-      if (ch === '"') { inQ = !inQ; }
-      else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
-      else { cur += ch; }
+      if (ch === '"') {
+        if (inQ && line[i+1] === '"') { cur += '"'; i += 2; continue; } // escaped quote
+        inQ = !inQ;
+      } else if (ch === ',' && !inQ) {
+        cols.push(cur.trim());
+        cur = '';
+      } else {
+        cur += ch;
+      }
+      i++;
     }
-    cols.push(cur);
+    cols.push(cur.trim());
+    return cols;
+  }
+
+  var lines = text.trim().split('\n').filter(function(l){ return l.trim(); });
+  if (lines.length < 2) return [];
+
+  var headers = parseLine(lines[0]).map(function(h){ return h.replace(/^\uFEFF/,'').trim(); });
+  
+  // Debug: log headers to console
+  console.log('CSV Headers found:', headers);
+
+  return lines.slice(1).map(function(line) {
+    var cols = parseLine(line);
     var obj = {};
-    headers.forEach(function(h, i){ obj[h] = (cols[i] || '').trim(); });
+    headers.forEach(function(h, i){ obj[h] = cols[i] !== undefined ? cols[i] : ''; });
     return obj;
-  }).filter(function(r){ return r.id; });
+  }).filter(function(r){ return r.id && r.id !== ''; });
 }
 
 document.getElementById('homeGrid').innerHTML = skeletons(6);
 
 fetch('pawfinds_data.csv?v=' + Date.now())
-  .then(function(res){ if(!res.ok) throw new Error(); return res.text(); })
+  .then(function(res){ if(!res.ok) throw new Error('CSV not found'); return res.text(); })
   .then(function(text){
     var data = parseCSV(text);
+    console.log('Loaded ' + data.length + ' products from CSV');
+    if (data.length === 0) throw new Error('empty CSV');
     PRODUCTS = data.map(normalizeProduct);
     renderAll();
   })
-  .catch(function(){
-    console.warn('CSV not found, using fallback data');
+  .catch(function(err){
+    console.warn('CSV error:', err, '— using fallback data');
     PRODUCTS = FALLBACK_RAW.map(normalizeProduct);
     renderAll();
   });
