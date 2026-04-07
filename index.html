@@ -889,7 +889,7 @@ function HomePage({ products, categories, onNavigate }) {
   const filtered = filter==='all' ? products : products.filter(p=>p.category_ids.includes(filter));
   const sorted = applySorting(filtered, sort);
 
-  const marqueeItems = ['משלוח חינם', 'מבצעים בלעדיים', 'בדיקה קפדנית', 'מוצרים מומלצים', 'מחירים הוגנים', 'איכות מובטחת'];
+  const marqueeItems = ['מבצעים בלעדיים', 'בדיקה קפדנית', 'מוצרים מומלצים', 'מחירים הוגנים', 'איכות מובטחת'];
 
   return (
     <>
